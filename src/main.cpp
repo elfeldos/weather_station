@@ -28,7 +28,7 @@ static bool measure_environment( float *temperature, float *humidity )
   static unsigned long measurement_timestamp = millis( );
 
   /* Measure once every four seconds. */
-  if( millis( ) - measurement_timestamp > 3000ul )
+  if( millis( ) - measurement_timestamp > 300000ul )
   {
     if( dht_sensor.measure( temperature, humidity ) == true )
     {
