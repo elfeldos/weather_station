@@ -1,43 +1,23 @@
 #include <Arduino.h>
-
-// // put function declarations here:
-// int myFunction(int, int);
-
-// void setup() {
-//   // put your setup code here, to run once:
-//   int result = myFunction(2, 3);
-// }
-
-// void loop() {
-//   // put your main code here, to run repeatedly:
-// }
-
-// // put function definitions here:
-// int myFunction(int x, int y) {
-//   return x + y;
-// }
-
-//www.elegoo.com
-//2018.10.25
-
-
+#include <LiquidCrystal.h>
 #include <dht_nonblocking.h>
+
 #define DHT_SENSOR_TYPE DHT_TYPE_11
 
 static const int DHT_SENSOR_PIN = 2;
+// set up dht instance by defining pin and type
 DHT_nonblocking dht_sensor( DHT_SENSOR_PIN, DHT_SENSOR_TYPE );
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
-
-
-/*
- * Initialize the serial port.
- */
 void setup( )
 {
   Serial.begin( 9600);
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("Moin Franco!");
 }
-
-
 
 /*
  * Poll for a measurement, keeping the state machine alive.  Returns
@@ -60,8 +40,6 @@ static bool measure_environment( float *temperature, float *humidity )
   return( false );
 }
 
-
-
 /*
  * Main program loop.
  */
@@ -69,6 +47,11 @@ void loop( )
 {
   float temperature;
   float humidity;
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+  lcd.print(millis() / 1000);
 
   /* Measure temperature and humidity.  If the functions returns
      true, then a measurement is available. */
@@ -81,3 +64,6 @@ void loop( )
     Serial.println( "%" );
   }
 }
+
+
+
